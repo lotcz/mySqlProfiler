@@ -1,15 +1,17 @@
 <?php
 
-	$db = mysql_connect('localhost','root','') or die('Cannot connect to DB');
+	$globals = [];
+	require 'config.php';
+	$filename = $globals['log_path'];
+	
+	$db = mysql_connect($globals['db_host'],$globals['db_login'],$globals['db_password']) or die('Cannot connect to DB');
 
 	$command = (isset($_POST['command'])) ? $_POST['command'] : 'refresh';
-
-	$filename = "D:\\mysql_log.log";
 	
 	switch ($command) {
 		case 'start':
 			mysql_query("SET global log_output = 'FILE';", $db);
-			mysql_query("SET global general_log_file='$filename';", $db);
+			mysql_query("SET global general_log_file='" . $filename . "';", $db);
 			mysql_query("SET global general_log = 1;", $db);
 			break;
 		case 'stop':
@@ -34,6 +36,7 @@
 				}
 			?>
 		</div>
+		<?php echo $globals['log_path']; ?>
 		<div>
 			<input type="submit" name="command" value="start" />
 			<input type="submit" name="command" value="stop" />
@@ -42,8 +45,6 @@
 		</div>
 	</form>
 	
-	<textarea style="width:100%;height:500px">
-	<?php echo file_get_contents ( $filename ); ?>
-	</textarea>
+	<textarea style="width:100%;height:500px"><?php echo file_get_contents ( $filename ); ?></textarea>
 </body>
 </html>
