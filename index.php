@@ -51,7 +51,7 @@
 			}
 		}
 		
-		function liv() {
+		function alive() {
 			isLive = !(isLive);
 			var el = document.getElementById('live');
 			if (isLive) {
@@ -62,12 +62,16 @@
 				el.style.backgroundColor = '';
 			}
 		}
-		
+				
 		function _get() {
 			xmlhttp.open('GET', '?command=live', true);			
 			xmlhttp.send();
 		}
 		
+		function clean() {
+			var el = document.getElementById('watch')
+			el.innerHTML = '';
+		}
 		
 	</script>
 	
@@ -85,7 +89,8 @@
 			<input type="submit" name="command" value="stop" />
 			<input type="submit" name="command" value="refresh" />
 			<input type="submit" name="command" value="reset" />
-			<input id="live" type="button" name="command" value="LIVE!" onclick="javascript:liv();" />
+			<input id="live" type="button" name="command" value="LIVE!" onclick="javascript:alive();" />
+			<input id="clear" type="button" name="command" value="clear" onclick="javascript:clean();" />
 		</div>
 	</form>
 	<div id="container" style="position:fixed;top:60px;left:10px;right:10px;bottom:10px;overflow:auto;border:solid 1px Black;">
